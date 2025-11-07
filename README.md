@@ -30,6 +30,9 @@ classDiagram
         -state: int
         +getState()
         +setState(state:int)
+        +attach(Observer)
+        +detach(Observer)
+        +notify()
         -observers: List~Observer~
     }
 
