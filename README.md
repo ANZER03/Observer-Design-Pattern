@@ -14,9 +14,11 @@ This project demonstrates the **Observer Design Pattern**, a behavioral design p
 ```mermaid
 classDiagram
     class Subject {
-        +attach(observer: Observer)
-        +detach(observer: Observer)
+        <<interface>>
+        +attach(Observer)
+        +detach(Observer)
         +notify()
+        
     }
 
     class Observer {
@@ -24,19 +26,30 @@ classDiagram
         +update()
     }
 
-    Subject <|-- ConcreteSubject
-    Observer <|-- ConcreteObserver
-
     class ConcreteSubject {
-        -state: string
-        +getState(): string
-        +setState(state: string)
+        -state: int
+        +getState()
+        +setState(state:int)
+        -observers: List~Observer~
     }
 
-    class ConcreteObserver {
-        -subject: ConcreteSubject
+    class ConcreteObserverA {
+        -state: int
         +update()
+        +display()
     }
 
-    ConcreteSubject --> ConcreteObserver : notifies
+    class ConcreteObserverB {
+        -state: int
+        +update()
+        +display()
+    }
+
+    Subject o-- Observer : maintains
+    Subject <|.. ConcreteSubject : implements
+
+    Observer <|.. ConcreteObserverA : implements
+    Observer <|.. ConcreteObserverB : implements
+    ConcreteSubject --> ConcreteObserverA : notifies
+    ConcreteSubject --> ConcreteObserverB : notifies
 ```
